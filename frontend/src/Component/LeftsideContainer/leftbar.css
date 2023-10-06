@@ -1,0 +1,24 @@
+.leftbar{
+ flex: 1;
+}
+
+.noticontainer{
+    width: 18pc;
+    background-color: white;
+    height: 60vh;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.notiImg{
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+.likeImg{
+    width: 30px;
+    height: 30px;
+    margin-left: 43px;
+    border-radius: 3px;
+}
