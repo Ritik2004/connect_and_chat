@@ -59,7 +59,7 @@ async(req,res)=>{
     try{
         //.select will select the specific field we want to see 
         //by putting plus we are telling only add this to our query
-         const user = await User.findOne({email:req.body.email}).select("+password");
+  const user = await User.findOne({email:req.body.email});
              if(!user){
                 return res.status(400).json("user does not exist")
              } 
@@ -72,7 +72,8 @@ async(req,res)=>{
             id:user._id,
             username:user.username
          },secret);
-         res.status(200).json({user, accessToken});
+         const{password, ...other} = user._doc
+         res.status(200).json({other, accessToken});
         }
     catch(error){
         return res.status(500).json("Internal error")
