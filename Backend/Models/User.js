@@ -13,11 +13,11 @@ const UserSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    pendingFriends:{
+    Followers:{
        type:Array,
        
     },
-    friends:{
+    Following:{
         type:Array,
     },
     phonenumber:{

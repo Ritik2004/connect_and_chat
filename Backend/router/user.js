@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const secret = "ritikgaur"
-
+const { verifyToken } = require("./verifyToken");
 
 router.post("/create/user", 
 body('email').isEmail(),
@@ -78,6 +78,44 @@ async(req,res)=>{
     catch(error){
         return res.status(500).json("Internal error")
     }
+})
+
+//following
+router.put("/following/:id" , verifyToken , async(req , res)=>{
+   if(req.params.id !== req.body.user){
+       const user = await User.findById(req.params.id);
+       const otheruser = await User.findById(req.body.user);
+
+       if(!user.Followers.includes(req.body.user)){
+           await user.updateOne({$push:{Followers:req.body.user}});
+           await otheruser.updateOne({$push:{Following:req.params.id}});
+           return res.status(200).json("User has followed");
+       }else{
+           await user.updateOne({$pull:{Followers:req.body.user}});
+           await otheruser.updateOne({$pull:{Following:req.params.id}});
+           return res.status(200).json("User has Unfollowed");
+       }
+   }else{
+       return res.status(400).json("You can't follow yourself")
+   }
+})
+
+router.put("/following/:id" , verifyToken , async(req , res)=>{
+   if(req.params.id !== req.body.user){
+       const user = await User.findById(req.params.id);
+       const otheruser = await User.findById(req.body.user);
+
+       if(!user.Followers.includes(req.body.user)){
+           await user.updateOne({$push:{Followers:req.body.user}});
+           await otheruser.updateOne({$push:{Following:req.params.id}});
+           return res.status(200).json("User has followed");
+       }else{
+          
+           return res.status(400).json("you already follow");
+       }
+   }else{
+       return res.status(400).json("You can't follow yourself")
+   }
 })
 
 module.exports = router; 
