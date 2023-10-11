@@ -3,7 +3,9 @@ import './constentpost.css'
 const ContentPost = () => {
   return (
     <div>
-      
+       <div className='ContentUploadContainer'>
+
+       </div>
     </div>
   )
 }
